@@ -29,6 +29,10 @@ import Process.ProcessRun;
  */
 class ProcessTest {
 
+	private static final String PROMPT = "\r\n>";
+	//private static final String APP_UNDER_TEST =  "C:\\_SourceDev.Test\\WsCppConsoleAPI\\CppConsoleAPI\\Debug\\CppConsoleAPI.exe";
+	private static final String APP_UNDER_TEST =  "C:\\_SourceDev.Test\\CshConsoleTest\\bin\\Debug\\CshConsoleAPI.exe";
+
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -64,7 +68,7 @@ class ProcessTest {
 	@Test
 	void testTrace() {	
 		try {
-			throw new Exception();
+			//throw new Exception();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			StringWriter sw = new StringWriter();
@@ -104,7 +108,7 @@ class ProcessTest {
 	void testConsole() {
 		String output = "";
 		ProcessRun process = new ProcessRun();
-		String[] command = {"C:\\_SourceDev.Test\\WsCppConsoleAPI\\CppConsoleAPI\\Debug\\CppConsoleAPI.exe",""};
+		String[] command = {APP_UNDER_TEST,""};
 		try {
 			output = process.Run(command);
 			System.out.println(output);
@@ -135,16 +139,57 @@ class ProcessTest {
 	void testEchoCommand() {
 		String output = "";
 		ProcessRun process = new ProcessRun();
-		String[] command = {"C:\\_SourceDev.Test\\WsCppConsoleAPI\\CppConsoleAPI\\Debug\\CppConsoleAPI.exe",""};
+		String[] command = {APP_UNDER_TEST,""};
 		try {
 			output = process.Run(command);
-			Assert.assertTrue(output.contentEquals("\r\n>"));
+			Assert.assertTrue(output.contentEquals(">"));
 			
-			output = process.Command("echo(Hello world)\n");
-			Assert.assertTrue(output.contentEquals("Hello world\r\n>"));
+			output = process.Command("echo(Hello world)");
+			Assert.assertTrue(output.contentEquals("Hello world" + PROMPT));
 
-			output = process.Command("echo(Hello world)\n");
-			Assert.assertTrue(output.contentEquals("Hello world\r\n>"));
+			output = process.Command("echo(Hello world)");
+			Assert.assertTrue(output.contentEquals("Hello world" + PROMPT));
+
+			output = process.Exit();			
+		}
+		catch (Exception e) {
+			//	In case of exception.
+			StringWriter sw = new StringWriter();
+			PrintWriter pw = new PrintWriter(sw);
+			//	Read the trace information.
+			e.printStackTrace(pw);
+			String trace = sw.toString();
+			
+			//	Write the trace to console and fail the test.
+			System.out.print(trace);
+			Assert.assertTrue(!trace.isEmpty());
+		}
+		return;
+	}
+
+
+	/***
+	 * Test the console application runs 
+	 * and execute command-line echo command.
+	 */
+	@Test
+	void testGuiCommand() {
+		String output = "";
+		ProcessRun process = new ProcessRun();
+		String[] command = {APP_UNDER_TEST,""};
+		try {
+			output = process.Run(command);
+			Assert.assertTrue(output.contentEquals(">"));
+			
+			output = process.Command("echo(Hello world)");
+			Assert.assertTrue(output.contentEquals("Hello world" + PROMPT));
+
+			output = process.Command("GuiShow()");
+
+			output = process.Command("GuiMult(7,6)");
+			Assert.assertTrue(output.contentEquals("42" + PROMPT));
+
+			output = process.Command("GuiClose()");
 
 			output = process.Exit();			
 		}

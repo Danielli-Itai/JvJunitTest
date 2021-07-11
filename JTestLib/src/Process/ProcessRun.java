@@ -116,6 +116,7 @@ public class ProcessRun
 		
 		// Read the output from the sub-process.
 		String std_out = this.OutputGet();
+		std_out = std_out.trim();
 		
 		// Read any errors from the attempted command.
 		String error = this.ErrorGet();
@@ -131,14 +132,14 @@ public class ProcessRun
 	public String Command(String command) throws Exception
 	{	
 		//	Write to standard output.
-		this.stdOut.write(command);
+		this.stdOut.write(command + System.lineSeparator());
 		this.stdOut.flush();
 		
 		//	Wait for sub process response.
 		while(!this.stdInput.ready());
 		
 		// Read the output from the command
-		String std_out = this.OutputGet();
+		String std_in = this.OutputGet();
 
 		//	Get sub process standard error.
 		String error = this.ErrorGet();
@@ -146,7 +147,7 @@ public class ProcessRun
 			//	Throw exception in case of error.
 			throw new Exception(error);
 		}
-		return(std_out);
+		return(std_in);
 	}
 
 	
