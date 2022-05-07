@@ -30,8 +30,8 @@ import Process.ProcessRun;
 class ProcessTest {
 
 	private static final String PROMPT = "\r\n>";
-	//private static final String APP_UNDER_TEST =  "C:\\_SourceDev.Test\\WsCppConsoleAPI\\CppConsoleAPI\\Debug\\CppConsoleAPI.exe";
-	private static final String APP_UNDER_TEST =  "C:\\_SourceDev.Test\\CshConsoleTest\\bin\\Debug\\CshConsoleAPI.exe";
+	//private static final String APP_UNDER_TEST =  "D:\\_SourceDev.Test\\WsCppConsoleAPI\\CppConsoleAPI\\Debug\\CppConsoleAPI.exe";
+	private static final String APP_UNDER_TEST =  "D:\\_SourceDev.Test\\CshConsoleTest\\bin\\Debug\\CshConsoleAPI.exe";
 
 	/**
 	 * @throws java.lang.Exception
