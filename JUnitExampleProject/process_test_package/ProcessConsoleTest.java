@@ -27,11 +27,13 @@ import Process.ProcessRun;
  * @author Itai
  *
  */
-class ProcessTest {
+class ProcessConsoleTest {
 
 	private static final String PROMPT = "\r\n>";
+	private static final String OK = "ok";
+	
 	//private static final String APP_UNDER_TEST =  "D:\\_SourceDev.Test\\WsCppConsoleAPI\\CppConsoleAPI\\Debug\\CppConsoleAPI.exe";
-	private static final String APP_UNDER_TEST =  "D:\\_SourceDev.Test\\CshConsoleTest\\bin\\Debug\\CshConsoleAPI.exe";
+	private static final String APP_UNDER_TEST =  "D:\\_SourceDev.Test\\CShCalculatorUnderTest\\CShConsoleCalculatorAPI\\bin\\Debug\\CshCalculatorUIAPI.exe";
 
 	/**
 	 * @throws java.lang.Exception
@@ -79,25 +81,6 @@ class ProcessTest {
 			
 			Assert.assertTrue(!trace1.isEmpty());
 		}
-	}
-
-
-	/***
-	 * Test operating system command line.
-	 * Run command line sub process.
-	 */	
-	@Test
-	void testCmdDir() {
-		ProcessRun process = new ProcessRun();
-		
-		try {
-			String[] dir_rist = {"dir", "c:\\"};
-			process.Execute(dir_rist);
-			process = null;
-		} catch (Exception e) {
-			fail("Unable to run dir");
-		}
-		return;
 	}
 	
 	
@@ -166,46 +149,4 @@ class ProcessTest {
 		}
 		return;
 	}
-
-
-	/***
-	 * Test the console application runs 
-	 * and execute command-line echo command.
-	 */
-	@Test
-	void testGuiCommand() {
-		String output = "";
-		ProcessRun process = new ProcessRun();
-		String[] command = {APP_UNDER_TEST,""};
-		try {
-			output = process.Run(command);
-			Assert.assertTrue(output.contentEquals(">"));
-			
-			output = process.Command("echo(Hello world)");
-			Assert.assertTrue(output.contentEquals("Hello world" + PROMPT));
-
-			output = process.Command("GuiShow()");
-
-			output = process.Command("GuiMult(7,6)");
-			Assert.assertTrue(output.contentEquals("42" + PROMPT));
-
-			output = process.Command("GuiClose()");
-
-			output = process.Exit();			
-		}
-		catch (Exception e) {
-			//	In case of exception.
-			StringWriter sw = new StringWriter();
-			PrintWriter pw = new PrintWriter(sw);
-			//	Read the trace information.
-			e.printStackTrace(pw);
-			String trace = sw.toString();
-			
-			//	Write the trace to console and fail the test.
-			System.out.print(trace);
-			Assert.assertTrue(!trace.isEmpty());
-		}
-		return;
-	}
-
 }

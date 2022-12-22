@@ -12,6 +12,9 @@ import java.io.OutputStreamWriter;
 
 public class ProcessRun
 {
+	//	Time to sleep between commands for animation.
+	private final int SLEEP_TIME = 1000;
+	
 	//	Process handler;
 	private Process proc = null;
 	
@@ -25,6 +28,9 @@ public class ProcessRun
 	//	Initiate a new process.
 	private Boolean  ProcNew(String[] proc_command) throws IOException
 	{
+		//	Write to console view.
+		System.out.println(String.join(" ", proc_command));
+
 		//	Run the sub process.
 		Runtime rt = Runtime.getRuntime();
 		this.proc = rt.exec(proc_command);
@@ -82,6 +88,7 @@ public class ProcessRun
 		String std_out = "";
 		String std_error = "";
 		
+		//	Create new process.
 		this.ProcNew(proc_command);
 		
 		// Read the output from the command
@@ -99,6 +106,10 @@ public class ProcessRun
 			throw new Exception(std_error);
 		}
 
+		//	Write to console view.
+		System.out.println(std_out);
+
+		Thread.sleep(SLEEP_TIME);
 		return(std_out);
 	}
 	
@@ -131,6 +142,9 @@ public class ProcessRun
 	//	Write command string to the sub process and return it's response.
 	public String Command(String command) throws Exception
 	{	
+		//	Write to console view.
+		System.out.println(command);
+		
 		//	Write to standard output.
 		this.stdOut.write(command + System.lineSeparator());
 		this.stdOut.flush();
@@ -147,6 +161,9 @@ public class ProcessRun
 			//	Throw exception in case of error.
 			throw new Exception(error);
 		}
+		
+		//	Write to console view.		
+		System.out.println(std_in);
 		return(std_in);
 	}
 
